@@ -16,8 +16,8 @@ export default class Search extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    let type = this.state.type
-    let radius = this.state.radius
+    let type = `&type=${this.state.type}`
+    let radius = `&radius=${this.state.radius}`
 
     this.props.handleSearch(type, radius)
   }

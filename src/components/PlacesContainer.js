@@ -1,5 +1,6 @@
 import React from 'react'
 import PlaceCard from './PlaceCard'
+import '../css/PlacesContainer.css'
 
 const PlacesContainer = props => {
 
@@ -10,7 +11,7 @@ const PlacesContainer = props => {
 
     } else {
       places = props.places.locations.results.map(place => {
-        return <PlaceCard key={place.id} {...place} />
+        return <PlaceCard key={place.id} {...place} getPlace={props.getPlace}/>
       })
     }
   }
@@ -19,7 +20,7 @@ const PlacesContainer = props => {
 
   return(
     <div>
-      {props.places ? <div>{places}</div> : <h1>No locations</h1>}
+      {props.places ? <div className="places-container">{places}</div> : <h1>No locations</h1>}
     </div>
   )
 }

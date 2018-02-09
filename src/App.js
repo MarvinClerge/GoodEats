@@ -27,21 +27,36 @@ export default class App extends React.Component {
   }
 
   showPosition = (position) => {
-    return `&location=${position.coords.latitude},${position.coords.longitude}`
+    let location = `&location=${position.coords.latitude},${position.coords.longitude}`
+
+    let typeValue = document.querySelector('#type').value
+    let type = `&type=${typeValue}`
+
+    let radiusValue = document.querySelector('#radius').value
+    let radius = `&radius=${radiusValue}`
+
+    fetch(`http://localhost:3001/api/v1/places?${location + type + radius}`)
+    .then(response => response.json())
+    .then(data => this.setState({ places: data }))
   }
 
-  handleSearch = (type, radius) => {
-    console.log(radius);
-    fetch(`http://localhost:3001/api/v1/places?type=${type}&radius=${radius}`)
-    .then(res => res.json())
-    .then(data => this.setState({ places: data }))
+  // handleSearch = (type, radius) => {
+  //   fetch(`http://localhost:3001/api/v1/places?type=${type}&radius=${radius}`)
+  //   .then(res => res.json())
+  //   .then(data => this.setState({ places: data }))
+  // }
+
+  getPlace = placeId => {
+    fetch(`http://localhost:3001/api/v1/places/${placeId}`)
+    .then(response => response.json())
+    .then(console.log)
   }
 
   render() {
     return(
       <div className='app'>
-        <Search handleSearch={this.handleSearch}/>
-        <PlacesContainer places={this.state.places} />
+        <Search handleSearch={this.getLocation} />
+        <PlacesContainer places={this.state.places} getPlace={this.getPlace} />
       </div>
     )
   }
