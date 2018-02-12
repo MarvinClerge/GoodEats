@@ -10,7 +10,7 @@ export default class PlaceCard extends Component {
     return(
       <div id={place_id} className="place-card">
         <Link to={`/place/${place_id}`}>
-          <img src={icon} />
+          <img src={icon} alt="icon"/>
           <p>Name: {name}</p>
         </Link>
         <p>Address: {vicinity}</p>

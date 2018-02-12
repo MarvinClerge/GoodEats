@@ -6,6 +6,7 @@ export default class PlacesContainer extends Component {
   handlePlaces = () => {
     if (this.props.locations) {
       let places = this.props.locations.results
+      console.log(this.props);
 
       if (places.length === 0) {
         return <h1>No Results</h1>

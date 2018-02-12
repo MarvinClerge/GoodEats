@@ -8,11 +8,6 @@ export default class PlaceDetails extends Component {
     picture: null
   }
 
-  componentDidMount(){
-    Adapter.getPlace(this.props.match.params.placeId)
-    .then(newPlace => this.setState({ place: newPlace }))
-  }
-
   renderPicture = () => {
     let pictureId = this.state.place.locations.result.photos[0].photo_reference
 
@@ -20,10 +15,14 @@ export default class PlaceDetails extends Component {
     .then(result => this.setState({ picture: result.picture }))
   }
 
+  componentDidMount(){
+    Adapter.getPlace(this.props.match.params.placeId)
+    .then(newPlace => this.setState({ place: newPlace }), () => this.renderPicture())
+  }
+
   render(){
     if (!this.state.place) return <h1>Loading</h1>
 
-    this.renderPicture()
     const {icon,
       name,
       vicinity,
