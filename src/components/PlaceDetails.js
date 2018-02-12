@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import Adapter from '../adapter'
 
-export default class PlaceDetails extends Component {
+class PlaceDetails extends Component {
   state = {
     place: null,
     picture: null
@@ -17,7 +17,12 @@ export default class PlaceDetails extends Component {
 
   componentDidMount(){
     Adapter.getPlace(this.props.match.params.placeId)
-    .then(newPlace => this.setState({ place: newPlace }), () => this.renderPicture())
+    .then(newPlace => {
+      let pictureId = newPlace.locations.result.photos[0].photo_reference
+
+      Adapter.getPicture(pictureId)
+      .then(result => this.setState({ picture: result.picture, place: newPlace }))
+    })
   }
 
   render(){
@@ -34,6 +39,8 @@ export default class PlaceDetails extends Component {
       website,
       photos} = this.state.place.locations.result
 
+      console.log(this.props);
+
     return(
       <div className="place-details">
         <Link to='/'>Go Back</Link>
@@ -47,8 +54,10 @@ export default class PlaceDetails extends Component {
         <p>{formatted_address}</p>
         <p>{formatted_phone_number}</p>
         <p>{website}</p>
-        {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p>}
+        {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p> }
       </div>
     )
   }
 }
+
+export default withRouter(PlaceDetails)
