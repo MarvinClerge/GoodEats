@@ -1,29 +1,24 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PlaceCard from './PlaceCard'
 import '../css/PlacesContainer.css'
 
-const PlacesContainer = props => {
+export default class PlacesContainer extends Component {
+  handlePlaces = () => {
+    if (this.props.locations) {
+      let places = this.props.locations.results
 
-  let places;
-  if (props.places) {
-    if (props.places.locations.results.length === 0) {
-      places = <h1>No result within this distance</h1>
-
-    } else {
-      places = props.places.locations.results.map(place => {
-        return <PlaceCard key={place.id} {...place} getPlace={props.getPlace}/>
-      })
+      if (places.length === 0) {
+        return <h1>No Results</h1>
+      } else {
+        return places.map(place => <PlaceCard key={place.id} {...place}/>)
+      }
     }
   }
 
-
-
-  return(
-    <div>
-      {props.places ? <div className="places-container">{places}</div> : <h1>No locations</h1>}
-    </div>
-  )
+  render(){
+    if (!this.props.locations) return <h1>Loading</h1>
+    return(
+      <div className="place-container">{this.handlePlaces()}</div>
+    )
+  }
 }
-
-
-export default PlacesContainer;

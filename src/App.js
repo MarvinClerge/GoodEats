@@ -1,63 +1,76 @@
-import React from 'react'
-import Search from './components/Search'
-import PlacesContainer from './components/PlacesContainer'
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import API_KEY from './keys'
+import Home from './components/Home';
+import PlaceDetails from './components/PlaceDetails'
+import Adapter from './adapter'
 
-let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-let location = '&location=40.7052569,-74.0162643'
-let radius = '&radius=100'
-let type = '&type=restaurant'
-
-
-let url2 = 'https://maps.googleapis.com/maps/api/place/details/json'
-let placeId = "&placeid=ChIJjUw7LxJawokRByGsMS3I1Xc"
-
-export default class App extends React.Component {
+class App extends Component {
   state = {
-    places: null
+    places: null,
+    position: null,
+    currentPlace: null,
+    radius: null,
+    type: null
   }
 
-  getLocation = () => {
-    if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(this.showPosition)
-    } else {
-      return null
-    }
-  }
-
-  showPosition = (position) => {
-    let location = `&location=${position.coords.latitude},${position.coords.longitude}`
-
-    let typeValue = document.querySelector('#type').value
-    let type = `&type=${typeValue}`
-
-    let radiusValue = document.querySelector('#radius').value
-    let radius = `&radius=${radiusValue}`
-
-    fetch(`http://localhost:3001/api/v1/places?${location + type + radius}`)
-    .then(response => response.json())
-    .then(data => this.setState({ places: data }))
-  }
-
-  // handleSearch = (type, radius) => {
-  //   fetch(`http://localhost:3001/api/v1/places?type=${type}&radius=${radius}`)
-  //   .then(res => res.json())
-  //   .then(data => this.setState({ places: data }))
+  // getAllLocations = () => {
+  //   if ( navigator.geolocation ) {
+  //     navigator.geolocation.getCurrentPosition(( position ) => {
+  //       let newPosition = `${position.coords.latitude},${position.coords.longitude}`
+  //       Adapter.initalSearch( position )
+  //       .then( newPlaces => this.setState({ places: newPlaces, position: newPosition }) )
+  //     })
+  //   } else {
+  //     return null
+  //   }
   // }
 
-  getPlace = placeId => {
-    fetch(`http://localhost:3001/api/v1/places/${placeId}`)
-    .then(response => response.json())
-    .then(console.log)
+  initializePlaces = (newPlaces, newPosition) => {
+    this.setState({ places: newPlaces, position: newPosition })
   }
 
-  render() {
+  handleSubmit = () => {
+    Adapter.newSearch(this.state.position)
+    .then( newPlaces => this.setState({ places: newPlaces }))
+  }
+
+
+  render(){
     return(
-      <div className='app'>
-        <Search handleSearch={this.getLocation} />
-        <PlacesContainer places={this.state.places} getPlace={this.getPlace} />
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path='/' render={() => {
+            return <Home
+              handleSubmit={this.handleSubmit}
+              places={this.state.places}
+              initializePlaces={this.initializePlaces} />
+          }} />
+
+          <Route path='/place/:placeId' render={(routerProps) => {
+            return <PlaceDetails {...routerProps} />
+          }} />
+        </Switch>
+      </Router>
     )
   }
+
+
+
+
+  // render() {
+  //   return (
+  //     <div className="App">
+  //       <Switch>
+  //         <Route exact path='/'
+  //           component={Home} />
+  //
+  //         <Route path='/place/:placeId'
+  //           render={(routerProps) => <PlaceDetails {...routerProps}/> }/>
+  //       </Switch>
+  //     </div>
+  //   );
+  // }
 }
+
+export default App;

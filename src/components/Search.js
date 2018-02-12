@@ -1,43 +1,25 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-export default class Search extends React.Component {
-  state = {
-    type: "restaurant",
-    radius: 100
-  }
+export default class Search extends Component {
 
-  handleTypeChange = event => {
-    this.setState({ type: event.target.value })
-  }
-
-  handleRadiusChange = event => {
-    this.setState({ radius: event.target.value })
-  }
-
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault()
-    let type = `&type=${this.state.type}`
-    let radius = `&radius=${this.state.radius}`
-
-    this.props.handleSearch(type, radius)
+    this.props.handleSubmit()
   }
 
   render(){
     return(
       <div>
-
         <form onSubmit={this.handleSubmit}>
-          <input type='number' id='radius' onChange={this.handleRadiusChange}/>
-          Range in meters
+          <input type="number" id="radius" defaultValue="1000"/>
 
-        <select id='type' onChange={this.handleTypeChange}>
-          <option value='restaurant'>restaurant</option>
-          <option value='bar'>bar</option>
-        </select>
-        Choose bars or restaurants
+          <select id="type">
+            <option value="restaurant" defaultValue >restaurant</option>
+            <option value="bar">bar</option>
+          </select>
 
-        <input type='submit' value='Search'/>
-      </form>
+          <input type='submit' value='Search' />
+        </form>
       </div>
     )
   }

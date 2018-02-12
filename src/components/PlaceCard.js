@@ -1,24 +1,23 @@
-import React from 'react'
+import React, {Component} from 'react'
 import '../css/PlaceCard.css'
+import { Link } from 'react-router-dom';
 
-const PlaceCard = props => {
+export default class PlaceCard extends Component {
 
-  function getPlace(event) {
-    console.log(event.target.nodeName);
-    props.getPlace(event.target.id)
+  render(){
+    const {place_id, icon, name, vicinity, price_level, rating, opening_hours} = this.props
+
+    return(
+      <div id={place_id} className="place-card">
+        <Link to={`/place/${place_id}`}>
+          <img src={icon} />
+          <p>Name: {name}</p>
+        </Link>
+        <p>Address: {vicinity}</p>
+        <p>Price Level: {price_level}</p>
+        <p>Rating: {rating}</p>
+        {opening_hours ? <p>{opening_hours.open_now.toString()}</p> : <p>Google It</p>}
+      </div>
+    )
   }
-
-  return(
-    <div className='card' id={props.place_id} onClick={getPlace}>
-      <img src={props.icon} /> <br/>
-      Name: {props.name} <br/>
-      Address: {props.vicinity} <br/>
-      Price Level: {props.price_level} <br/>
-      Rating: {props.rating} <br/>
-    {props.opening_hours ? props.opening_hours.open_now.toString() : <p>Google It</p>}
-    </div>
-  )
 }
-
-
-export default PlaceCard;
