@@ -1,3 +1,6 @@
+const token = localStorage.getItem('token')
+const getHeaders = { 'Content-Type': 'application/json', 'Accepts': 'application/json', 'Authorization': token}
+
 class Adapter {
   static initalSearch(position) {
     let location = `&location=${position.coords.latitude},${position.coords.longitude}`
@@ -28,6 +31,15 @@ class Adapter {
 
   static getPicture(pictureId) {
     return fetch(`http://localhost:3001/api/v1/pictures/${pictureId}`)
+    .then(response => response.json())
+  }
+
+  static login(username, password) {
+    return fetch(`http://localhost:3001/api/v1/login`, {
+      method: 'POST',
+      headers: getHeaders,
+      body: JSON.stringify({username, password})
+    })
     .then(response => response.json())
   }
 

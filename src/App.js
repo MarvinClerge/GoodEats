@@ -11,7 +11,11 @@ class App extends Component {
     position: null,
     currentPlace: null,
     radius: null,
-    type: null
+    type: null,
+    auth: {
+      loggedIn: false,
+      token: null
+    }
   }
 
   // getAllLocations = () => {
@@ -35,6 +39,19 @@ class App extends Component {
     .then( newPlaces => this.setState({ places: newPlaces }))
   }
 
+  handleLogin = (username, password) => {
+    Adapter.login(username, password)
+    .then(data => {
+      if (data.error) {
+        alert(data.error)
+      } else {
+        this.setState({
+          auth: {...this.state.auth, loggedIn: true, token: data.token}
+        })
+      }
+    })
+  }
+
 
   render(){
     return(
@@ -44,7 +61,9 @@ class App extends Component {
             return <Home
               handleSubmit={this.handleSubmit}
               places={this.state.places}
-              initializePlaces={this.initializePlaces} />
+              initializePlaces={this.initializePlaces}
+              handleLogin={this.handleLogin}
+              auth={this.state.auth}/>
           }} />
 
           <Route path='/place/:placeId' render={(routerProps) => {

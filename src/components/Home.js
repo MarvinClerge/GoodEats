@@ -17,11 +17,22 @@ export default class Home extends Component {
     }
   }
 
+  loginOrPlaces = () => {
+    if (!this.props.auth.loggedIn) {
+      return <h1>Please Login</h1>
+    } else {
+      return <h1>Welcome</h1>
+    }
+  }
+
   render(){
+    console.log(this.props)
     return(
       <div>
         <Search
-          handleSubmit={this.props.handleSubmit} />
+          handleSubmit={this.props.handleSubmit}
+          handleLogin={this.props.handleLogin} />
+        {this.loginOrPlaces()}
         <PlacesContainer
           {...this.props.places} />
       </div>
