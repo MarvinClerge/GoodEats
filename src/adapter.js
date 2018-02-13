@@ -56,6 +56,7 @@ class Adapter {
       headers: getHeaders,
       body: JSON.stringify({userId, placeId})
     })
+    .then(response => response.json())
   }
 
   static removeFromFavorites(userId, placeId) {
@@ -63,8 +64,8 @@ class Adapter {
       method: 'DELETE',
       headers: getHeaders,
       body: JSON.stringify({userId, placeId})
-
     })
+    .then(response => response.json())
   }
 
 }

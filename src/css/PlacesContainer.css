@@ -1,4 +1,11 @@
-.place-container {
+.place-container1 {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100vw;
+  border-bottom: 5px solid;
+}
+.place-container2 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;

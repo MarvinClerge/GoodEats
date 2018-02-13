@@ -37,7 +37,7 @@ class App extends Component {
     if (token) {
       Adapter.getCurrentUser()
       .then(data => this.setState({
-        auth: {...this.state.auth, currentUser: data.user, favorites: data.favorites}
+        auth: {...this.state.auth, currentUser: data.user, favorites: data.favorites, loggedIn: true, token: token}
       }))
     }
   }
@@ -80,7 +80,7 @@ class App extends Component {
     let userId = this.state.auth.currentUser.id
     let favorites = this.state.auth.favorites
 
-    Adapter.addToFavorites(username, placeId)
+    Adapter.addToFavorites(userId, placeId)
     .then(data => {
       if (data.error) {
         alert(data.error)
@@ -98,13 +98,15 @@ class App extends Component {
 
     Adapter.removeFromFavorites(userId, placeId)
     .then(data => {
-      if (data.success) {
-        let favorites = this.state.auth.favorites.splice(placeIndex, 1)
+      if (data.message) {
+        let newFavorites = this.state.auth.favorites
+        newFavorites.splice(placeIndex, 1)
+
         this.setState({
-           auth: {...this.state.auth, favorites: favorites}
+           auth: {...this.state.auth, favorites: newFavorites}
         })
       } else if (data.error) {
-        alert(data.error)
+        console.log(data.error)
       }
     }) // .then
   }
