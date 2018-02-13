@@ -31,10 +31,11 @@ export default class Home extends Component {
       <div>
         <Search
           handleSubmit={this.props.handleSubmit}
-          handleLogin={this.props.handleLogin} />
+          handleLogin={this.props.handleLogin}
+          handleLogout={this.props.handleLogout} />
         {this.loginOrPlaces()}
         <PlacesContainer
-          {...this.props.places} />
+          {...this.props.places} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites}/>
       </div>
     )
   }

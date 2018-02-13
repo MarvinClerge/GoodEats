@@ -17,6 +17,8 @@ export default class PlaceCard extends Component {
         <p>Price Level: {price_level}</p>
         <p>Rating: {rating}</p>
         {opening_hours ? <p>{opening_hours.open_now.toString()}</p> : <p>Google It</p>}
+        <button onClick={this.props.addToFavorites}>Add to Favorites</button>
+        <button onClick={this.props.removeFromFavorites}>Remove From Favorites</button>
       </div>
     )
   }

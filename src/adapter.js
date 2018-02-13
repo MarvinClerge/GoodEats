@@ -43,6 +43,13 @@ class Adapter {
     .then(response => response.json())
   }
 
+  static getCurrentUser() {
+    return fetch(`http://localhost:3001/api/v1/currentuser`, {
+      headers: getHeaders
+    })
+    .then(response => response.json())
+  }
+
 }
 
 export default Adapter;

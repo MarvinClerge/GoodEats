@@ -23,13 +23,23 @@ export default class Search extends Component {
     this.props.handleLogin(this.state.username, this.state.password)
   }
 
+  handleLogout = (event) => {
+    event.preventDefault()
+    this.props.handleLogout()
+  }
+
+  handleForm = (event) => {
+    event.preventDefault()
+  }
+
   render(){
     return(
       <div>
-        <form onSubmit={this.handleLogin}>
+        <form onSubmit={this.handleForm}>
           <input type='text' name='username' placeholder='Username' onChange={this.handleLoginChange}></input>
           <input type='password' name='password' placeholder='Password' onChange={this.handleLoginChange}></input>
-          <input type='submit' value='Sign In'></input>
+          <input type='submit' value='Sign In' onClick={this.handleLogin}></input>
+          <input type='submit' value='Log Out' onClick={this.handleLogout}></input>
         </form>
         <form onSubmit={this.handleSubmit}>
           <input type="number" id="radius" defaultValue="1000"/>

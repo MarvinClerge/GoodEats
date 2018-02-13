@@ -11,7 +11,7 @@ export default class PlacesContainer extends Component {
       if (places.length === 0) {
         return <h1>No Results</h1>
       } else {
-        return places.map(place => <PlaceCard key={place.id} {...place}/>)
+        return places.map(place => <PlaceCard key={place.id} {...place} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites}/>)
       }
     }
   }

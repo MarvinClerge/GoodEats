@@ -14,7 +14,8 @@ class App extends Component {
     type: null,
     auth: {
       loggedIn: false,
-      token: null
+      token: null,
+      currentUser: null
     }
   }
 
@@ -29,6 +30,16 @@ class App extends Component {
   //     return null
   //   }
   // }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      Adapter.getCurrentUser()
+      .then(data => this.setState({
+        auth: {...this.state.auth, currentUser: data.username}
+      }))
+    }
+  }
 
   initializePlaces = (newPlaces, newPosition) => {
     this.setState({ places: newPlaces, position: newPosition })
@@ -45,6 +56,7 @@ class App extends Component {
       if (data.error) {
         alert(data.error)
       } else {
+        localStorage.setItem('token', data.token)
         this.setState({
           auth: {...this.state.auth, loggedIn: true, token: data.token}
         })
@@ -52,6 +64,16 @@ class App extends Component {
     })
   }
 
+  handleLogout = () => {
+    localStorage.removeItem('token')
+    this.setState({
+      auth: {
+        loggedIn: false,
+        token: undefined,
+        currentUser: null
+      }
+    })
+  }
 
   render(){
     return(
@@ -63,6 +85,7 @@ class App extends Component {
               places={this.state.places}
               initializePlaces={this.initializePlaces}
               handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
               auth={this.state.auth}/>
           }} />
 
