@@ -68,6 +68,39 @@ class Adapter {
     .then(response => response.json())
   }
 
+  static createComment(userId, content, placeId) {
+    return fetch(`http://localhost:3001/api/v1/comments`, {
+      method: "POST",
+      headers: getHeaders,
+      body: JSON.stringify({userId, content, placeId})
+    })
+    .then(response => response.json())
+  }
+
+  static getComments(placeId) {
+    return fetch(`http://localhost:3001/api/v1/comments?placeId=${placeId}`)
+    .then(response => response.json())
+  }
+
+  static updateComment(commentId, content) {
+    return fetch(`http://localhost:3001/api/v1/comments`, {
+      method: "PATCH",
+      headers: getHeaders,
+      body: JSON.stringify({commentId, content})
+    })
+    .then(response => response.json())
+  }
+
+  static destroyComment(commentId) {
+    return fetch(`http://localhost:3001/api/v1/comments`, {
+      method: "DELETE",
+      headers: getHeaders,
+      body: JSON.stringify({commentId})
+    })
+    .then(response => response.json())
+  }
+
+
 }
 
 export default Adapter;

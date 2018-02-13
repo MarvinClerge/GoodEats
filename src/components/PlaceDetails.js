@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import Adapter from '../adapter'
+import CommentsContainer from './CommentsContainer'
 
 class PlaceDetails extends Component {
   state = {
@@ -47,9 +48,8 @@ class PlaceDetails extends Component {
       formatted_address,
       formatted_phone_number,
       website,
-      photos} = this.state.place.locations.result
-
-      console.log(this.props);
+      photos,
+      place_id} = this.state.place.locations.result
 
     return(
       <div className="place-details">
@@ -66,6 +66,8 @@ class PlaceDetails extends Component {
         <p>{formatted_phone_number}</p>
         <p>{website}</p>
         {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p> }
+
+        <CommentsContainer placeId={place_id}/>
       </div>
     )
   }
