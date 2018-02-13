@@ -15,7 +15,8 @@ class App extends Component {
     auth: {
       loggedIn: false,
       token: null,
-      currentUser: null
+      currentUser: null,
+      favorites: []
     }
   }
 
@@ -36,7 +37,7 @@ class App extends Component {
     if (token) {
       Adapter.getCurrentUser()
       .then(data => this.setState({
-        auth: {...this.state.auth, currentUser: data.username}
+        auth: {...this.state.auth, currentUser: data.user, favorites: data.favorites}
       }))
     }
   }
@@ -58,7 +59,7 @@ class App extends Component {
       } else {
         localStorage.setItem('token', data.token)
         this.setState({
-          auth: {...this.state.auth, loggedIn: true, token: data.token}
+          auth: {...this.state.auth, loggedIn: true, token: data.token, currentUser: data.user, favorites: data.favorites}
         })
       }
     })
@@ -75,6 +76,39 @@ class App extends Component {
     })
   }
 
+  addToFavorites = (placeId) => {
+    let userId = this.state.auth.currentUser.id
+    let favorites = this.state.auth.favorites
+
+    Adapter.addToFavorites(username, placeId)
+    .then(data => {
+      if (data.error) {
+        alert(data.error)
+      } else {
+        this.setState({
+           auth: {...this.state.auth, favorites: [...favorites, placeId]}
+        })
+      }
+    }) // .then
+  }
+
+  removeFromFavorites = (placeId) => {
+    let userId = this.state.auth.currentUser.id
+    let placeIndex = this.state.auth.favorites.indexOf(placeId)
+
+    Adapter.removeFromFavorites(userId, placeId)
+    .then(data => {
+      if (data.success) {
+        let favorites = this.state.auth.favorites.splice(placeIndex, 1)
+        this.setState({
+           auth: {...this.state.auth, favorites: favorites}
+        })
+      } else if (data.error) {
+        alert(data.error)
+      }
+    }) // .then
+  }
+
   render(){
     return(
       <Router>
@@ -86,6 +120,8 @@ class App extends Component {
               initializePlaces={this.initializePlaces}
               handleLogin={this.handleLogin}
               handleLogout={this.handleLogout}
+              addToFavorites={this.addToFavorites}
+              removeFromFavorites={this.removeFromFavorites}
               auth={this.state.auth}/>
           }} />
 

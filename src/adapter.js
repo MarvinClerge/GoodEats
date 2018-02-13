@@ -50,6 +50,23 @@ class Adapter {
     .then(response => response.json())
   }
 
+  static addToFavorites(userId, placeId) {
+    return fetch(`http://localhost:3001/api/v1/addfavorite`, {
+      method: 'POST',
+      headers: getHeaders,
+      body: JSON.stringify({userId, placeId})
+    })
+  }
+
+  static removeFromFavorites(userId, placeId) {
+    return fetch(`http://localhost:3001/api/v1/removefavorite`, {
+      method: 'DELETE',
+      headers: getHeaders,
+      body: JSON.stringify({userId, placeId})
+
+    })
+  }
+
 }
 
 export default Adapter;
