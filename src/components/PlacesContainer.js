@@ -24,9 +24,11 @@ export default class PlacesContainer extends Component {
       if (places.length === 0) {
         return null
       } else {
-        places = places.filter(place => this.props.auth.favorites.includes(place.place_id))
-        places = places.map(place => <PlaceCard key={place.id} {...place} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} auth={this.props.auth}/>)
-        return places
+        if (this.props.auth.loggedIn) {
+          places = places.filter(place => this.props.auth.favorites.includes(place.place_id))
+          places = places.map(place => <PlaceCard key={place.id} {...place} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} auth={this.props.auth}/>)
+          return places
+        }
       }
     }
   }

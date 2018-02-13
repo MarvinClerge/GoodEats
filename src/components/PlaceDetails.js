@@ -15,6 +15,16 @@ class PlaceDetails extends Component {
     .then(result => this.setState({ picture: result.picture }))
   }
 
+  renderFavorite = () => {
+    let placeId = this.state.place.locations.result.place_id
+
+    if (this.props.auth.favorites.includes(placeId)) {
+      return <button onClick={() => this.props.removeFromFavorites(placeId)}>Remove From Favorites</button>
+    } else {
+      return <button onClick={() => this.props.addToFavorites(placeId)}>Add to Favorites</button>
+    }
+  }
+
   componentDidMount(){
     Adapter.getPlace(this.props.match.params.placeId)
     .then(newPlace => {
@@ -46,6 +56,7 @@ class PlaceDetails extends Component {
         <Link to='/'>Go Back</Link>
         <img src={icon} />
         <p>Name: {name}</p>
+        {this.props.auth.loggedIn ? this.renderFavorite() : <h1>Not loggedIn</h1>}
         <p>Address: {vicinity}</p>
         <p>Price Level: {price_level}</p>
         <p>Rating: {rating}</p>
