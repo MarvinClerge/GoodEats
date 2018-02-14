@@ -6,7 +6,7 @@ import CommentsContainer from './CommentsContainer'
 class PlaceDetails extends Component {
   state = {
     place: null,
-    picture: null
+    picture: null,
   }
 
   renderPicture = () => {
@@ -67,7 +67,7 @@ class PlaceDetails extends Component {
         <p>{website}</p>
         {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p> }
 
-        <CommentsContainer placeId={place_id}/>
+        <CommentsContainer placeId={place_id} auth={this.props.auth}/>
       </div>
     )
   }
