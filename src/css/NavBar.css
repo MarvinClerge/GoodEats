@@ -1,0 +1,25 @@
+h1 {
+  margin: 0;
+}
+
+.navbar {
+  background: red;
+  width: 100vw;
+  height: 11vh;
+  display: grid;
+  grid-template-columns: 1.5fr 4fr 2fr;
+  grid-template-areas:
+  "title . login"
+}
+
+.title {
+  margin-left: 10%;
+  grid-area: title;
+  text-decoration: none;
+  color: white;
+  font-size: 50px;
+}
+
+.login {
+  grid-area: login;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import Comment from './Comment'
 import Adapter from '../adapter'
+import '../css/CommentsContainer.css'
 
 export default class CommentsContainer extends React.Component {
   state = {
@@ -41,10 +42,12 @@ export default class CommentsContainer extends React.Component {
     console.log(this.state.comments);
     return(
       <div className="comments-container">
-        <form onSubmit={this.handleSubmit}>
-          <textarea rows="10" width="500px" onChange={this.handleInputChange} value={this.state.content}/>
-          <input type="submit" value="Submit Comment" />
-        </form>
+        <div className='new-comment'>
+          <form onSubmit={this.handleSubmit}>
+            <textarea rows="10" width="500px" onChange={this.handleInputChange} value={this.state.content}/>
+            <input type="submit" value="Submit Comment" />
+          </form>
+        </div>
 
         {this.state.comments ? this.handleComments() : <h1>Loading Comments</h1>}
       </div>

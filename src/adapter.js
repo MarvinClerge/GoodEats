@@ -4,23 +4,19 @@ const getHeaders = { 'Content-Type': 'application/json', 'Accepts': 'application
 class Adapter {
   static initalSearch(position) {
     let location = `&location=${position.coords.latitude},${position.coords.longitude}`
+    let typeParam = `&type=restaurant`
+    let radiusParam = `&radius=1000`
 
-    let typeValue = document.querySelector('#type').value
-    let type = `&type=${typeValue}`
-
-    let radiusValue = document.querySelector('#radius').value
-    let radius = `&radius=${radiusValue}`
-
-    return fetch(`http://localhost:3001/api/v1/places?${location + type + radius}`)
+    return fetch(`http://localhost:3001/api/v1/places?${location + typeParam + radiusParam}`)
     .then(response => response.json())
   }
 
-  static newSearch(position) {
+  static newSearch(position, radius, type) {
     let location = `&location=${position}`
-    let type = `&type=${ document.querySelector('#type').value }`
-    let radius = `&radius=${ document.querySelector('#radius').value }`
+    let typeParam = `&type=${type}`
+    let radiusParam = `&radius=${radius}`
 
-    return fetch(`http://localhost:3001/api/v1/places?${location + type + radius}`)
+    return fetch(`http://localhost:3001/api/v1/places?${location + typeParam + radiusParam}`)
     .then(response => response.json())
   }
 
