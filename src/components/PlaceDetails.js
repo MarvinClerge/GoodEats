@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import Adapter from '../adapter'
+import CommentsContainer from './CommentsContainer'
 
 class PlaceDetails extends Component {
   state = {
     place: null,
-    picture: null
+    picture: null,
   }
 
   renderPicture = () => {
@@ -13,6 +14,16 @@ class PlaceDetails extends Component {
 
     Adapter.getPicture(pictureId)
     .then(result => this.setState({ picture: result.picture }))
+  }
+
+  renderFavorite = () => {
+    let placeId = this.state.place.locations.result.place_id
+
+    if (this.props.auth.favorites.includes(placeId)) {
+      return <button onClick={() => this.props.removeFromFavorites(placeId)}>Remove From Favorites</button>
+    } else {
+      return <button onClick={() => this.props.addToFavorites(placeId)}>Add to Favorites</button>
+    }
   }
 
   componentDidMount(){
@@ -37,15 +48,15 @@ class PlaceDetails extends Component {
       formatted_address,
       formatted_phone_number,
       website,
-      photos} = this.state.place.locations.result
-
-      console.log(this.props);
+      photos,
+      place_id} = this.state.place.locations.result
 
     return(
       <div className="place-details">
         <Link to='/'>Go Back</Link>
         <img src={icon} />
         <p>Name: {name}</p>
+        {this.props.auth.loggedIn ? this.renderFavorite() : <h1>Not loggedIn</h1>}
         <p>Address: {vicinity}</p>
         <p>Price Level: {price_level}</p>
         <p>Rating: {rating}</p>
@@ -55,6 +66,8 @@ class PlaceDetails extends Component {
         <p>{formatted_phone_number}</p>
         <p>{website}</p>
         {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p> }
+
+        <CommentsContainer placeId={place_id} auth={this.props.auth}/>
       </div>
     )
   }

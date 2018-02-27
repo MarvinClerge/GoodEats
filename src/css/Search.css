@@ -1,0 +1,67 @@
+.container {
+  width: 100vw;
+  height: 50vh;
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../images/background.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#radius {
+  text-align: center;
+  font-size: 40px;
+  width: 15vw;
+  height: 6vh;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid white;
+  color: white;
+  transition: .5s;
+}
+
+#radius:focus {
+  border-bottom: 2px solid lightgreen;
+  outline: none;
+  transition: .5s;
+}
+
+#type {
+  text-align: center;
+  text-align-last: center;
+  font-size: 40px;
+  width: 20vw;
+  height: 6.9vh;
+  background: none;
+  border: 0;
+  color: white;
+  transition: .5s;
+  margin: 0 auto;
+}
+
+#type:focus {
+  appearance: none;
+  outline: none;
+  border-radius: 0px;
+  border-bottom: 2px solid white;
+}
+
+.option {
+  background-color: red;
+}
+
+.search {
+  background: none;
+  border: 0;
+  color: white;
+  font-size: 20px;
+}
+
+label {
+  color: white;
+  font-size: 20px;
+  border-bottom: 2px solid white;
+}

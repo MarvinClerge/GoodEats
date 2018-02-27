@@ -128,7 +128,7 @@ class App extends Component {
           }} />
 
           <Route path='/place/:placeId' render={(routerProps) => {
-            return <PlaceDetails {...routerProps} />
+            return <PlaceDetails {...routerProps} auth={this.state.auth} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites}/>
           }} />
         </Switch>
       </Router>
