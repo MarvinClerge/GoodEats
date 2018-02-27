@@ -9,10 +9,9 @@ class NavBar extends Component {
     return(
       <div className='navbar'>
 
-        <Link to='/' className="title">
+        <Link to='/'>
           <div>
-            <span>yerp</span>
-            <img src={require('../images/icon.png')} width="50px" height="50px"/>
+            <h1 className='title'>Good Eats</h1>
           </div>
         </Link>
 
