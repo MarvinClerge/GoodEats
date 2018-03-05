@@ -1,6 +1,6 @@
 # GoodEats
 
-`to view the GoodEats backend [click here](https://github.com/MarvinClerge/Module-4-React-Project-Backend)`
+to view the GoodEats backend [click here](https://github.com/MarvinClerge/Module-4-React-Project-Backend)
 
 GoodEats is a web app that allows users to view nearby resturants and bars.
 This web application uses the GooglePlaces API and custom made API.
