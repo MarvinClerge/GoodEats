@@ -39,10 +39,24 @@ class PlaceDetails extends Component {
 
   renderStatus = () => {
     if (this.state.place.locations.result.opening_hours.open_now) {
-      return <p>Open Now</p>
+      return <p>Open</p>
     } else {
       return <p>Closed</p>
     }
+  }
+
+  renderDays = () => {
+    if (this.state.place.locations.result.opening_hours) {
+      return this.state.place.locations.result.opening_hours.weekday_text.map(hour => {
+        return(
+          <tr>
+            <th>{hour.split(":")[0]}</th>
+            <td>{hour}</td>
+          </tr>
+        )
+      })
+    }
+
   }
 
 
@@ -63,42 +77,52 @@ class PlaceDetails extends Component {
 
     return(
       <div className="place-details">
-        {this.props.auth.loggedIn ? this.renderFavorite() : null}
 
         <div className='header'>
-          <img src={icon} />
           <h1>{name}</h1>
+          {this.renderStatus()}
+          {this.props.auth.loggedIn ? this.renderFavorite() : null}
         </div>
 
-        <div className="info">
-          <h3>Information</h3>
-          <div>
-            <p>{formatted_address}</p>
-            <p>{formatted_phone_number}</p>
-            <p>{website}</p>
-          </div>
+        <div className="d-info">
+
+          <table>
+            <tr>
+              <th>Address:</th>
+              <td><a href={`http://maps.google.com/?q=${formatted_address}`}>{formatted_address}</a></td>
+            </tr>
+
+            <tr>
+              <th>Number:</th>
+              <td>{formatted_phone_number}</td>
+            </tr>
+
+            <tr>
+              <th>Website:</th>
+              <td><a href={website}>{website}</a></td>
+            </tr>
+
+            <tr>
+              <th>Rating:</th>
+              <td>{rating} stars</td>
+            </tr>
+
+            <tr>
+              <th>Price Level:</th>
+              <td>{price_level} stars</td>
+            </tr>
+
+            <tr>
+              <th className="hours">Hours</th>
+            </tr>
+            {this.renderDays()}
+
+
+          </table>
         </div>
 
-        <div className='info2'>
-          <h3>Rating and Price Level</h3>
-          <div>
-            <p>Price Level: {price_level}</p>
-            <p>Rating: {rating}</p>
-          </div>
-        </div>
-
-        <div className='info3'>
-          <h3>Hours</h3>
-          <div>
-            {opening_hours ? opening_hours.weekday_text.map(day => <p>{day}</p>) : null}
-          </div>
-        </div>
-
-        <div className='info4'>
-          <h3>Images</h3>
-          <div>
-            {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>Image Missing</p> }
-          </div>
+        <div className='d-image'>
+          {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>Image Missing</p> }
         </div>
 
 
