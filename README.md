@@ -33,6 +33,25 @@ In order to use this application ruby and node js must be installed
 7. Run npm start to start the frontend server
 8. Go to http://localhost:3000 in your browser
 
+## How to use?
+After installation this application offers a varitey of activities. First let go over the searching. When the application first loads it will ask for permission for your location. This is to determine what locations are near you. By default the applications will return restaurants within 1000 meters of you.
+
+#### Search
+Under the navbar you will find the search area. Here you can change two parameters for you results. The left input will change the distance of restaurants that can be discovered. The right input will change whether restaurants or bars will be returned. After changing the parameters click on the search button and the result will be returned below.
+
+#### Login
+In the top right corner of the web application will find the login section. Here you can create an account or login. Once you are logged in you will have the ability to favorite and comment on locations.
+
+#### Places
+After a search in the main page the results will appear below. Here you can view the nearby restaurants and their information such as their location, rating, and if they are open. If you click on a place’s card you will be taken to a page containing more information. Here you can view even more information about the location and comment on it.
+
+#### Comment
+When viewing the page that contains all of a place’s information you will find a comment section at the bottom. Here you can view all comments let by other users about that location. If you are logged in you can write and comment of your own or edit and delete your previous comments.
+
+## Screenshots
+![playine section](screen1.png)
+![browsing section](screen2.png)
+
 ## License
 MIT License
 
