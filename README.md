@@ -1,7 +1,7 @@
 # GoodEats
 An application that allows users to discover new restaurants and bars based on their current location
 
-[Click here to view the backend of Calibre](https://github.com/MarvinClerge/GoodEats-Backend)
+[Click here to view the backend of GoodEats](https://github.com/MarvinClerge/GoodEats-Backend)
 
 ## Motivation
 The goal behind this application was to refine my web development skills in the following areas:
