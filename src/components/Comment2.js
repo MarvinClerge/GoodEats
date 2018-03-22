@@ -68,7 +68,7 @@ export default class Comment extends React.Component {
   render() {
     return(
       <div className='comment'>
-        <p>{this.props.username}</p>
+        <p>{this.props.username}: </p>
         {this.renderForm()}
         <p>{this.state.comment.content}</p>
         {this.isCurrentUser() ? this.renderEdit() : null}

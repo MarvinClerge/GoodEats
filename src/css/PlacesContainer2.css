@@ -38,3 +38,8 @@
   text-align: center;
   background: #969696;
 }
+
+.loading {
+  margin-top: 50px;
+  text-align: center;
+}

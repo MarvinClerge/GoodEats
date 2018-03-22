@@ -33,7 +33,7 @@ export default class PlacesContainer extends Component {
   }
 
   render(){
-    if (!this.props.places) return <h1>Loading</h1>
+    if (!this.props.places) return <h1 className="loading">Loading</h1>
 
   return(
     <div className="place-container">

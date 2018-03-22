@@ -10,29 +10,33 @@
 
 .header > *{
   display: inline;
-  margin: 10px;
+  margin: 30px 5px 20px 5px;
 }
 
 .d-info {
   width: 710px;
-  height: 70vh;
+  height: 55vh;
   display: flex;
   justify-content: flex-end;
   padding: 20px 10px 0 0;
 }
 
-.hours {
+.d-info > table > tr > th {
+  text-align: right
+}
+
+th.hours {
   padding: 20px 0 0 0;
 }
 
 .d-image {
   width: 50%;
-  height: 70vh;
+  height: 55vh;
   display: flex;
   justify-content: flex-start;
 }
 
 .d-image > img{
-  height: auto;
+  height: 500px;
   width: 500px;
 }

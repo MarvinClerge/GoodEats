@@ -18,7 +18,6 @@ export default class CommentsContainer extends React.Component {
 
   handleComments = () => {
     return this.state.comments.slice().reverse().map(comment => {
-      console.log(comment.comment.id);
       return <Comment {...comment} key={comment.comment.id} auth={this.props.auth} currentUser={this.props.currentUser} removeComment={this.removeComment}/>
     })
   }
@@ -56,9 +55,9 @@ export default class CommentsContainer extends React.Component {
     return(
       <div className="comments-container">
         <div clasName="new-comment">
-          <h3>New Comment</h3>
+          <h3>Write a Comment!</h3>
           <form onSubmit={this.handleSubmit}>
-            <textarea rows="10" onChange={this.handleInputChange} value={this.state.content} id="content"/>
+            <textarea rows="8" onChange={this.handleInputChange} value={this.state.content} id="content"/>
             <br />
             <input type="submit" value="Submit Comment" />
           </form>

@@ -39,7 +39,7 @@ class PlaceDetails extends Component {
 
   renderStatus = () => {
     if (this.state.place.locations.result.opening_hours.open_now) {
-      return <p>Open</p>
+      return <p>Now Open</p>
     } else {
       return <p>Closed</p>
     }
@@ -88,28 +88,28 @@ class PlaceDetails extends Component {
 
           <table>
             <tr>
-              <th>Address:</th>
+              <th>Address: </th>
               <td><a href={`http://maps.google.com/?q=${formatted_address}`}>{formatted_address}</a></td>
             </tr>
 
             <tr>
-              <th>Number:</th>
+              <th>Number: </th>
               <td>{formatted_phone_number}</td>
             </tr>
 
             <tr>
-              <th>Website:</th>
+              <th>Website: </th>
               <td><a href={website}>{website}</a></td>
             </tr>
 
             <tr>
-              <th>Rating:</th>
+              <th>Rating: </th>
               <td>{rating} stars</td>
             </tr>
 
             <tr>
-              <th>Price Level:</th>
-              <td>{price_level} stars</td>
+              <th>Price Level: </th>
+              <td>{price_level}</td>
             </tr>
 
             <tr>
