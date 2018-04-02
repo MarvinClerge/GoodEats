@@ -3,10 +3,18 @@ import React, { Component } from 'react'
 import Login from './Login'
 import Signup from './Signup'
 
+import './../../css/auth/auth.css'
+
 class Auth extends Component {
 
   state = {
     login: false
+  }
+
+  onClick = event => {
+    if (event.target.className === "auth") {
+      // remove compenent here
+    }
   }
 
   toggleState = () => {
@@ -15,20 +23,22 @@ class Auth extends Component {
     })
   }
 
-  render(){
+  renderComponent = () => {
     if (this.state.login) {
-      return(
-        <div className="auth">
-          <Login toggleState={this.toggleState} />
-        </div>
-      )
+      return <Login toggleState={this.toggleState} />
     } else {
-      return(
-        <div className="auth">
-          <Signup toggleState={this.toggleState} />
-        </div>
-      )
+      return <Signup toggleState={this.toggleState} />
     }
+  }
+
+  render(){
+    return(
+      <div className="auth" onClick={this.onClick}>
+        <div className="content">
+          {this.renderComponent()}
+        </div>
+      </div>
+    )
   }
 }
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './../../css/auth/login.css'
+
 class Login extends Component {
 
   state = {
@@ -14,7 +16,7 @@ class Login extends Component {
 
   onChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.id]: event.target.value
     })
   }
 
@@ -25,9 +27,21 @@ class Login extends Component {
   render(){
     return(
       <div className="login">
+        <h1>Login</h1>
         <form onSubmit={this.onSubmit}>
-          <input type="text" name="username" onChange={this.onChange}/>
-          <input type="password" name="password" onChange={this.onChange}/>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.username}/>
+
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            onChange={this.onChange}
+            value={this.state.password}/>
         </form>
 
         <a href="" onClick={this.onClick}>or signup</a>

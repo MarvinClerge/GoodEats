@@ -1,0 +1,51 @@
+/* MOBLIE FORMAT */
+@media screen and (min-width: 320px) {
+  .login h1 {
+    margin: 0 0 2rem 0;
+  }
+
+  .login form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .login input {
+    width: 10rem;
+    height: 1.2rem;
+    margin: 0 0 1rem 0;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 2px;
+  }
+
+  .login label {
+    color: black;
+    font-size: 1rem;
+  }
+}
+
+/* TABLET AND DESKTOP FORMAT */
+@media screen and (min-width: 768px) {
+  .login h1 {
+    margin: 0 0 2rem 0;
+  }
+
+  .login form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .login input {
+    width: 10rem;
+    height: 1.2rem;
+    margin: 0 0 1rem 0;
+    border: 1px solid rgb(201, 201, 201);
+    border-radius: 2px;
+  }
+
+  .login label {
+    color: black;
+    font-size: 1rem;
+  }
+}

@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom';
+
 import '../css/NavBar.css'
+import Auth from './auth/Auth'
 
 import Login from './Login'
 
@@ -15,12 +17,7 @@ class NavBar extends Component {
           </div>
         </Link>
 
-        <div className="login">
-          <Login
-            {...this.props.auth}
-            handleLogin={this.props.handleLogin}
-            handleLogout={this.props.handleLogout} />
-        </div>
+        <Auth />
       </div>
     )
   }

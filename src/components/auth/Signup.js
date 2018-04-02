@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
+import './../../css/auth/signup.css'
+
 class Signup extends Component {
 
   state = {
     username: "",
-    password: ""
+    password: "",
+    passwordConfirmation: ""
   }
 
   onClick = event => {
@@ -14,7 +17,7 @@ class Signup extends Component {
 
   onChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.id]: event.target.value
     })
   }
 
@@ -25,9 +28,16 @@ class Signup extends Component {
   render(){
     return(
       <div className="signup">
+        <h1>Signup</h1>
         <form onSubmit={this.onSubmit}>
-          <input type="text" name="username" onChange={this.onChange}/>
-          <input type="password" name="password" onChange={this.onChange}/>
+          <label htmlFor="username">Username</label>
+          <input type="text" id="username" onChange={this.onChange}/>
+
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" onChange={this.onChange}/>
+
+          <label htmlFor="passwordConfirmation">Confirm Password</label>
+          <input type="password" id="passwordConfirmation" onChange={this.onChange}/>
         </form>
 
         <a href="" onClick={this.onClick}>or login</a>

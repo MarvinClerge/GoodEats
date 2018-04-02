@@ -1,0 +1,47 @@
+/* MOBLIE FORMAT */
+@media screen and (min-width: 320px) {
+  .auth {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.49);
+  }
+
+  .auth .content {
+    width: 15rem;
+    height: 20rem;
+    display: flex;
+    background: white;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* TABLET AND ABOVE FORMAT */
+@media screen and (min-width: 768px) {
+  .auth {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.49);
+  }
+
+  .auth .content {
+    width: 22rem;
+    height: 25rem;
+    display: flex;
+    background: white;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+  }
+}
