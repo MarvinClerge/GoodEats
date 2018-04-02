@@ -2,11 +2,22 @@ import React, {Component} from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import Adapter from '../adapter'
 import CommentsContainer from './CommentsContainer'
+import '../css/PlaceDetails.css'
 
 class PlaceDetails extends Component {
   state = {
     place: null,
     picture: null,
+  }
+
+  componentDidMount(){
+    Adapter.getPlace(this.props.match.params.placeId)
+    .then(newPlace => {
+      let pictureId = newPlace.locations.result.photos[0].photo_reference
+
+      Adapter.getPicture(pictureId)
+      .then(result => this.setState({ picture: result.picture, place: newPlace }))
+    })
   }
 
   renderPicture = () => {
@@ -19,22 +30,35 @@ class PlaceDetails extends Component {
   renderFavorite = () => {
     let placeId = this.state.place.locations.result.place_id
 
-    if (this.props.auth.favorites.includes(placeId)) {
-      return <button onClick={() => this.props.removeFromFavorites(placeId)}>Remove From Favorites</button>
+    if (this.props.favorites.includes(placeId)) {
+      return <button onClick={() => this.props.removeFromFavorites(placeId)}>-</button>
     } else {
-      return <button onClick={() => this.props.addToFavorites(placeId)}>Add to Favorites</button>
+      return <button onClick={() => this.props.addToFavorites(placeId)}>+</button>
     }
   }
 
-  componentDidMount(){
-    Adapter.getPlace(this.props.match.params.placeId)
-    .then(newPlace => {
-      let pictureId = newPlace.locations.result.photos[0].photo_reference
-
-      Adapter.getPicture(pictureId)
-      .then(result => this.setState({ picture: result.picture, place: newPlace }))
-    })
+  renderStatus = () => {
+    if (this.state.place.locations.result.opening_hours.open_now) {
+      return <p>Now Open</p>
+    } else {
+      return <p>Closed</p>
+    }
   }
+
+  renderDays = () => {
+    if (this.state.place.locations.result.opening_hours) {
+      return this.state.place.locations.result.opening_hours.weekday_text.map(hour => {
+        return(
+          <tr>
+            <th>{hour.split(":")[0]}</th>
+            <td>{hour}</td>
+          </tr>
+        )
+      })
+    }
+
+  }
+
 
   render(){
     if (!this.state.place) return <h1>Loading</h1>
@@ -53,21 +77,56 @@ class PlaceDetails extends Component {
 
     return(
       <div className="place-details">
-        <Link to='/'>Go Back</Link>
-        <img src={icon} />
-        <p>Name: {name}</p>
-        {this.props.auth.loggedIn ? this.renderFavorite() : <h1>Not loggedIn</h1>}
-        <p>Address: {vicinity}</p>
-        <p>Price Level: {price_level}</p>
-        <p>Rating: {rating}</p>
-        {opening_hours ? <p>{opening_hours.open_now.toString()}</p> : <p>Google It</p>}
-        {opening_hours ? opening_hours.weekday_text.map(day => <p>{day}</p>) : <p>Google It</p>}
-        <p>{formatted_address}</p>
-        <p>{formatted_phone_number}</p>
-        <p>{website}</p>
-        {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>No Image</p> }
 
-        <CommentsContainer placeId={place_id} auth={this.props.auth}/>
+        <div className='header'>
+          <h1>{name}</h1>
+          {this.renderStatus()}
+          {this.props.auth.loggedIn ? this.renderFavorite() : null}
+        </div>
+
+        <div className="d-info">
+
+          <table>
+            <tr>
+              <th>Address: </th>
+              <td><a href={`http://maps.google.com/?q=${formatted_address}`}>{formatted_address}</a></td>
+            </tr>
+
+            <tr>
+              <th>Number: </th>
+              <td>{formatted_phone_number}</td>
+            </tr>
+
+            <tr>
+              <th>Website: </th>
+              <td><a href={website}>{website}</a></td>
+            </tr>
+
+            <tr>
+              <th>Rating: </th>
+              <td>{rating} stars</td>
+            </tr>
+
+            <tr>
+              <th>Price Level: </th>
+              <td>{price_level}</td>
+            </tr>
+
+            <tr>
+              <th className="hours">Hours</th>
+            </tr>
+            {this.renderDays()}
+
+
+          </table>
+        </div>
+
+        <div className='d-image'>
+          {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>Image Missing</p> }
+        </div>
+
+
+        <CommentsContainer placeId={place_id} auth={this.props.auth} currentUser={this.props.currentUser}/>
       </div>
     )
   }

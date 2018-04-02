@@ -1,56 +1,43 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Home from './components/Home';
 import PlaceDetails from './components/PlaceDetails'
 import Adapter from './adapter'
+import './css/App.css'
+
+import NavBar from './components/NavBar'
 
 class App extends Component {
   state = {
     places: null,
     position: null,
-    currentPlace: null,
-    radius: null,
-    type: null,
+    favorites: [],
+    currentUser: null,
     auth: {
       loggedIn: false,
-      token: null,
-      currentUser: null,
-      favorites: []
+      token: null
     }
   }
-
-  // getAllLocations = () => {
-  //   if ( navigator.geolocation ) {
-  //     navigator.geolocation.getCurrentPosition(( position ) => {
-  //       let newPosition = `${position.coords.latitude},${position.coords.longitude}`
-  //       Adapter.initalSearch( position )
-  //       .then( newPlaces => this.setState({ places: newPlaces, position: newPosition }) )
-  //     })
-  //   } else {
-  //     return null
-  //   }
-  // }
 
   componentDidMount() {
     const token = localStorage.getItem('token')
     if (token) {
       Adapter.getCurrentUser()
       .then(data => this.setState({
-        auth: {...this.state.auth, currentUser: data.user, favorites: data.favorites, loggedIn: true, token: token}
+        auth: {loggedIn: true, token: token},
+        currentUser: data.user,
+        favorites: data.favorites
       }))
     }
   }
 
-  initializePlaces = (newPlaces, newPosition) => {
+  // Home
+  initialize = (newPlaces, newPosition) => {
     this.setState({ places: newPlaces, position: newPosition })
   }
 
-  handleSubmit = () => {
-    Adapter.newSearch(this.state.position)
-    .then( newPlaces => this.setState({ places: newPlaces }))
-  }
-
+  // NavBar
   handleLogin = (username, password) => {
     Adapter.login(username, password)
     .then(data => {
@@ -59,7 +46,7 @@ class App extends Component {
       } else {
         localStorage.setItem('token', data.token)
         this.setState({
-          auth: {...this.state.auth, loggedIn: true, token: data.token, currentUser: data.user, favorites: data.favorites}
+          auth: {...this.state.auth, loggedIn: true, token: data.token}
         })
       }
     })
@@ -70,15 +57,19 @@ class App extends Component {
     this.setState({
       auth: {
         loggedIn: false,
-        token: undefined,
-        currentUser: null
+        token: undefined
       }
     })
   }
 
+  handleSearch = (radius, type) => {
+    Adapter.newSearch(this.state.position, radius, type)
+    .then( newPlaces => this.setState({ places: newPlaces }))
+  }
+
+  // Search
   addToFavorites = (placeId) => {
-    let userId = this.state.auth.currentUser.id
-    let favorites = this.state.auth.favorites
+    let userId = this.state.currentUser.id
 
     Adapter.addToFavorites(userId, placeId)
     .then(data => {
@@ -86,24 +77,24 @@ class App extends Component {
         alert(data.error)
       } else {
         this.setState({
-           auth: {...this.state.auth, favorites: [...favorites, placeId]}
+           favorites: [...this.state.favorites, placeId]
         })
       }
     }) // .then
   }
 
   removeFromFavorites = (placeId) => {
-    let userId = this.state.auth.currentUser.id
-    let placeIndex = this.state.auth.favorites.indexOf(placeId)
+    let userId = this.state.currentUser.id
+    let placeIndex = this.state.favorites.indexOf(placeId)
 
     Adapter.removeFromFavorites(userId, placeId)
     .then(data => {
       if (data.message) {
-        let newFavorites = this.state.auth.favorites
+        let newFavorites = this.state.favorites
         newFavorites.splice(placeIndex, 1)
 
         this.setState({
-           auth: {...this.state.auth, favorites: newFavorites}
+          favorites: newFavorites
         })
       } else if (data.error) {
         console.log(data.error)
@@ -113,44 +104,72 @@ class App extends Component {
 
   render(){
     return(
-      <Router>
+      <div className='app'>
+        <NavBar
+          handleLogout={this.handleLogout}
+          handleLogin={this.handleLogin}
+          auth={this.state.auth} />
         <Switch>
           <Route exact path='/' render={() => {
-            return <Home
-              handleSubmit={this.handleSubmit}
-              places={this.state.places}
-              initializePlaces={this.initializePlaces}
-              handleLogin={this.handleLogin}
-              handleLogout={this.handleLogout}
-              addToFavorites={this.addToFavorites}
-              removeFromFavorites={this.removeFromFavorites}
-              auth={this.state.auth}/>
-          }} />
+              return (
+                <Home
+                  places={this.state.places}
+                  favorites={this.state.favorites}
+                  auth={this.state.auth}
+                  handleSearch={this.handleSearch}
+                  initialize={this.initialize}
+                  addToFavorites={this.addToFavorites}
+                  removeFromFavorites={this.removeFromFavorites} />
+              )
+            }}/>
 
           <Route path='/place/:placeId' render={(routerProps) => {
-            return <PlaceDetails {...routerProps} auth={this.state.auth} addToFavorites={this.addToFavorites} removeFromFavorites={this.removeFromFavorites}/>
-          }} />
-        </Switch>
-      </Router>
+              return(
+                <PlaceDetails
+                  {...routerProps}
+                  auth={this.state.auth}
+                  favorites={this.state.favorites}
+                  addToFavorites={this.addToFavorites}
+                  removeFromFavorites={this.removeFromFavorites}
+                  currentUser={this.state.currentUser} />
+              )
+            }}/>
+
+
+          </Switch>
+        </div>
     )
   }
 
 
-
-
   // render() {
-  //   return (
-  //     <div className="App">
+  //   return(
+  //     <Router>
   //       <Switch>
-  //         <Route exact path='/'
-  //           component={Home} />
+  //         <Route exact path='/' render={() => {
+  //             return (
+  //               <Home
+  //                 places={this.state.places}
+  //                 favorites={this.state.favorites}
+  //                 handleLogout={this.handleLogout}
+  //                 handleLogin={this.handleLogin}
+  //                 auth={this.state.auth}
+  //                 handleSearch={this.handleSearch}
+  //                 initialize={this.initialize}
+  //                 addToFavorites={this.addToFavorites}
+  //                 removeFromFavorites={this.removeFromFavorites} />
   //
-  //         <Route path='/place/:placeId'
-  //           render={(routerProps) => <PlaceDetails {...routerProps}/> }/>
+  //
+  //             )
+  //
+  //
+  //           }}/>
   //       </Switch>
-  //     </div>
-  //   );
+  //     </Router>
+  //   )
   // }
+
+
 }
 
 export default App;

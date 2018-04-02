@@ -10,7 +10,11 @@ export default class Comment extends React.Component {
   }
 
   isCurrentUser = () => {
-    return this.props.user_id === this.props.auth.currentUser.id
+    if (this.props.currentUser) {
+      return this.props.user_id === this.props.currentUser.id
+    } else {
+      return false
+    }
   }
 
   renderEdit = () => {
@@ -19,6 +23,14 @@ export default class Comment extends React.Component {
     } else {
       return <button onClick={this.toggleEdit}>Edit</button>
     }
+  }
+
+  renderDelete = () => {
+    return <button onClick={this.delete}>Delete</button>
+  }
+
+  delete = () => {
+    this.props.removeComment(this.state.comment)
   }
 
   toggleEdit = () => {
@@ -56,10 +68,11 @@ export default class Comment extends React.Component {
   render() {
     return(
       <div className='comment'>
-        <p>{this.props.username}</p>
+        <p>{this.props.username}: </p>
         {this.renderForm()}
-        {this.isCurrentUser() ? this.renderEdit() : null}
         <p>{this.state.comment.content}</p>
+        {this.isCurrentUser() ? this.renderEdit() : null}
+        {this.isCurrentUser() ? this.renderDelete() : null}
       </div>
     )
   }

@@ -17,8 +17,8 @@ export default class CommentsContainer extends React.Component {
   }
 
   handleComments = () => {
-    return this.state.comments.slice().map(comment => {
-      return <Comment {...comment} auth={this.props.auth}/>
+    return this.state.comments.slice().reverse().map(comment => {
+      return <Comment {...comment} key={comment.comment.id} auth={this.props.auth} currentUser={this.props.currentUser} removeComment={this.removeComment}/>
     })
   }
 
@@ -28,7 +28,7 @@ export default class CommentsContainer extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    let user = this.props.auth.currentUser
+    let user = this.props.currentUser
     let content = this.state.content
     let placeId = this.props.placeId
 
@@ -38,13 +38,27 @@ export default class CommentsContainer extends React.Component {
     }))
   }
 
+  removeComment = (comment) => {
+    Adapter.destroyComment(comment.id)
+    .then(data => {
+      if (data.message) {
+        let newComments = this.state.comments.filter(comm => {
+          return comm.comment.id !== comment.id
+        })
+
+        this.setState({ comments: newComments })
+      }
+    })
+  }
+
   render(){
-    console.log(this.state.comments);
     return(
       <div className="comments-container">
-        <div className='new-comment'>
+        <div clasName="new-comment">
+          <h3>Write a Comment!</h3>
           <form onSubmit={this.handleSubmit}>
-            <textarea rows="10" width="500px" onChange={this.handleInputChange} value={this.state.content}/>
+            <textarea rows="8" onChange={this.handleInputChange} value={this.state.content} id="content"/>
+            <br />
             <input type="submit" value="Submit Comment" />
           </form>
         </div>
