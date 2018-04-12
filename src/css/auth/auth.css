@@ -1,47 +1,71 @@
-/* MOBLIE FORMAT */
-@media screen and (min-width: 320px) {
-  .auth {
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.49);
-  }
-
-  .auth .content {
-    width: 15rem;
-    height: 20rem;
-    display: flex;
-    background: white;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
-  }
+.auth {
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.49);
 }
 
-/* TABLET AND ABOVE FORMAT */
-@media screen and (min-width: 768px) {
-  .auth {
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    position: fixed;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.49);
+.auth-content {
+  width: 22rem;
+  height: 25rem;
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.login, .signup {
+  text-align: center;
+}
+
+.auth-title {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.auth-label {
+  color: black;
+  font-size: 1rem;
+}
+
+.auth-input {
+  width: 15rem;
+  height: 1.2rem;
+  margin: 0 0 1rem 0;
+  border: 1px solid rgb(201, 201, 201);
+  border-radius: 2px;
+}
+
+.auth-submit {
+  width: 15rem;
+  background: #a31c1c;
+  color: white;
+  height: 3rem;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  border-color: none;
+  margin: 0 0 1rem 0;
+}
+
+@media all and (max-width: 370px) {
+  .auth-content {
+    width: 15rem;
+    min-height: 20rem;
+    padding: 1rem 0 1rem 0;
   }
 
-  .auth .content {
-    width: 22rem;
-    height: 25rem;
-    display: flex;
-    background: white;
-    border-radius: 5px;
-    align-items: center;
-    justify-content: center;
+  .auth-input, .auth-submit {
+    width: 10rem;
   }
 }

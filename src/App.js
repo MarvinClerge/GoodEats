@@ -14,10 +14,7 @@ class App extends Component {
     position: null,
     favorites: [],
     currentUser: null,
-    auth: {
-      loggedIn: false,
-      token: null
-    }
+    loggedIn: false,
   }
 
   componentDidMount() {
@@ -32,35 +29,20 @@ class App extends Component {
     }
   }
 
+  setUser = (data) => {
+    localStorage.setItem('token', data.token)
+    this.setState({
+      currentUser: data.user
+    })
+  }
+
   // Home
   initialize = (newPlaces, newPosition) => {
     this.setState({ places: newPlaces, position: newPosition })
   }
 
   // NavBar
-  handleLogin = (username, password) => {
-    Adapter.login(username, password)
-    .then(data => {
-      if (data.error) {
-        alert(data.error)
-      } else {
-        localStorage.setItem('token', data.token)
-        this.setState({
-          auth: {...this.state.auth, loggedIn: true, token: data.token}
-        })
-      }
-    })
-  }
 
-  handleLogout = () => {
-    localStorage.removeItem('token')
-    this.setState({
-      auth: {
-        loggedIn: false,
-        token: undefined
-      }
-    })
-  }
 
   handleSearch = (radius, type) => {
     Adapter.newSearch(this.state.position, radius, type)
@@ -106,14 +88,14 @@ class App extends Component {
     return(
       <div className='app'>
         <NavBar
-          handleLogout={this.handleLogout}
-          handleLogin={this.handleLogin}
-          auth={this.state.auth} />
+          setUser={this.setUser}
+          user={this.state.currentUser}/>
+
         <Switch>
           <Route exact path='/' render={() => {
-              return (
-                <Home
-                  places={this.state.places}
+            return (
+              <Home
+                places={this.state.places}
                   favorites={this.state.favorites}
                   auth={this.state.auth}
                   handleSearch={this.handleSearch}

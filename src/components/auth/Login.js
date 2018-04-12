@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-
-import './../../css/auth/login.css'
+import Adapter from '../../adapter'
+import Error from '../../error'
 
 class Login extends Component {
 
@@ -22,26 +22,39 @@ class Login extends Component {
 
   onSubmit = event => {
     event.preventDefault()
+    Adapter.login(this.state)
+    .then(response => {
+      if (!response.user) {
+        console.log('login error');
+      } else {
+        this.props.setUser(response)
+        this.props.change()
+      }
+    })
   }
 
   render(){
     return(
       <div className="login">
-        <h1>Login</h1>
-        <form onSubmit={this.onSubmit}>
-          <label htmlFor="username">Username</label>
+        <h1 className="auth-title">Login</h1>
+        <form onSubmit={this.onSubmit} className='auth-form'>
+          <label htmlFor="username" className='auth-label'>Username</label>
           <input
             id="username"
+            className='auth-input'
             type="text"
             onChange={this.onChange}
             value={this.state.username}/>
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className='auth-label'>Password</label>
           <input
             id="password"
+            className='auth-input'
             type="password"
             onChange={this.onChange}
             value={this.state.password}/>
+
+          <input type="submit" value="Login" className='auth-submit'/>
         </form>
 
         <a href="" onClick={this.onClick}>or signup</a>

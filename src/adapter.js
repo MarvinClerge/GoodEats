@@ -30,11 +30,37 @@ class Adapter {
     .then(response => response.json())
   }
 
-  static login(username, password) {
-    return fetch(`http://localhost:3001/api/v1/login`, {
+  static signup(payload) {
+    return fetch('http://localhost:3001/api/v1/users', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
+      },
+      body: JSON.stringify({
+        user: {
+          username: payload.username,
+          password: payload.password,
+          password_confirmation: payload.passwordConfirmation
+        }
+      })
+    })
+    .then(response => response.json())
+  }
+
+  static login(payload) {
+    return fetch('http://localhost:3001/api/v1/login', {
       method: 'POST',
-      headers: getHeaders,
-      body: JSON.stringify({username, password})
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        user: {
+          username: payload.username,
+          password: payload.password
+        }
+      })
     })
     .then(response => response.json())
   }

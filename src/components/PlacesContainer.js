@@ -37,7 +37,7 @@ export default class PlacesContainer extends Component {
 
   return(
     <div className="place-container">
-      {this.props.auth.loggedIn ?
+      {this.props.loggedIn ?
         <div className="favorites">
           <h1>Favorites</h1>
           {this.handleFavorites()}

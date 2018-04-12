@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import Adapter from '../adapter'
 import CommentsContainer from './CommentsContainer'
 import '../css/PlaceDetails.css'
@@ -122,7 +122,7 @@ class PlaceDetails extends Component {
         </div>
 
         <div className='d-image'>
-          {this.state.picture ? <img src={this.state.picture} alt={`Image from ${name}`}/> : <p>Image Missing</p> }
+          {this.state.picture ? <img src={this.state.picture} alt={`${name}`}/> : <p>Image Missing</p> }
         </div>
 
 

@@ -13,7 +13,7 @@ class Auth extends Component {
 
   onClick = event => {
     if (event.target.className === "auth") {
-      // remove compenent here
+      this.props.change()
     }
   }
 
@@ -25,16 +25,26 @@ class Auth extends Component {
 
   renderComponent = () => {
     if (this.state.login) {
-      return <Login toggleState={this.toggleState} />
+      return (
+        <Login
+          change={this.props.change}
+          setUser={this.props.setUser}
+          toggleState={this.toggleState} />
+      )
     } else {
-      return <Signup toggleState={this.toggleState} />
+      return (
+        <Signup
+          change={this.props.change}
+          setUser={this.props.setUser}
+          toggleState={this.toggleState} />
+      )
     }
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div className="auth" onClick={this.onClick}>
-        <div className="content">
+        <div className="auth-content">
           {this.renderComponent()}
         </div>
       </div>

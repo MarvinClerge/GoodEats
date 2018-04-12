@@ -1,18 +1,41 @@
-h1 {
-  margin: 0;
+/* MOBLIE FORMAT */
+@media screen and (min-width: 320px) {
+  .nav {
+    background: #a31c1c;
+    height: 2.5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: .2rem .5rem .2rem .5rem;
+  }
+
+  .nav-title {
+    font-size: 2rem;
+    color: white;
+    grid-column: 1;
+  }
+
+  .nav-btn {
+    grid-column: 2;
+    color: white;
+    background: none;
+    border: 0;
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+  }
 }
 
-.navbar {
-  background: #a31c1c;
-  min-width: 100vw;
-  max-width: 100vw;
-  text-align: center;
-  display: flex;
-}
+/* TABLET AND DESKTOP FORMAT */
+@media screen and (min-width: 768px) {
+  .navbar {
+    background: #a31c1c;
+    height: 3rem;
+    display: flex;
+  }
 
-.title {
-  font-size: 3vw;
-  padding-right: 50vw;
-  padding-left: 1vw;
-  color: white;
+  .navbar-title {
+    font-size: 2rem;
+    color: white;
+    padding: .2rem 0 0 .5rem;
+  }
 }

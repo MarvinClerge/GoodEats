@@ -23,7 +23,7 @@ class Home extends Component {
     return(
       <div className='home'>
         <Search handleSearch={this.props.handleSearch} />
-        <PlacesContainer places={this.props.places} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} favorites={this.props.favorites} auth={this.props.auth}/>
+        {/* <PlacesContainer places={this.props.places} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} favorites={this.props.favorites} auth={this.props.auth}/> */}
       </div>
     )
   }

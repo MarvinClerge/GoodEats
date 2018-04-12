@@ -22,7 +22,7 @@ export default class Search extends Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <input type="number" name="radius" onChange={this.handleInputChange} value={this.state.radius} id="radius"/>
-          <label for="radius">meters</label>
+          <label htmlFor="radius">meters</label>
 
           <select name="type" onChange={this.handleInputChange} value={this.state.type} id="type">
             <option value="restaurant" className='option'>Restaurant</option>

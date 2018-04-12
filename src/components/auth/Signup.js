@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-
-import './../../css/auth/signup.css'
+import Adapter from '../../adapter'
+import Error from '../../error'
 
 class Signup extends Component {
 
@@ -23,21 +23,44 @@ class Signup extends Component {
 
   onSubmit = event => {
     event.preventDefault()
+    Adapter.signup(this.state)
+    .then(response => {
+      if (!response.user) {
+        Error.signup(response)
+      } else {
+        this.props.setUser(response)
+        this.props.change()
+      }
+    })
   }
 
   render(){
     return(
       <div className="signup">
-        <h1>Signup</h1>
-        <form onSubmit={this.onSubmit}>
-          <label htmlFor="username">Username</label>
-          <input type="text" id="username" onChange={this.onChange}/>
+        <h1 className='auth-title'>Signup</h1>
+        <form className='auth-form' onSubmit={this.onSubmit}>
+          <label htmlFor="username" className='auth-label'>Username</label>
+          <input
+            type="text"
+            className='auth-input'
+            id="username"
+            onChange={this.onChange}/>
 
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" onChange={this.onChange}/>
+          <label htmlFor="password" className='auth-label'>Password</label>
+          <input
+            type="password"
+            className='auth-input'
+            id="password"
+            onChange={this.onChange}/>
 
-          <label htmlFor="passwordConfirmation">Confirm Password</label>
-          <input type="password" id="passwordConfirmation" onChange={this.onChange}/>
+          <label htmlFor="passwordConfirmation" className='auth-label'>Confirm Password</label>
+          <input
+            type="password"
+            className='auth-input'
+            id="passwordConfirmation"
+            onChange={this.onChange}/>
+
+          <input type="submit" value="Create Account" className='auth-submit'/>
         </form>
 
         <a href="" onClick={this.onClick}>or login</a>
