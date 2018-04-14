@@ -30,6 +30,8 @@ class Adapter {
     .then(response => response.json())
   }
 
+  // New Functions
+
   static signup(payload) {
     return fetch('http://localhost:3001/api/v1/users', {
       method: "POST",
@@ -64,6 +66,19 @@ class Adapter {
     })
     .then(response => response.json())
   }
+
+  static search(data) {
+    let location = `location=${data.position.coords.latitude},${data.position.coords.longitude}`
+    let radius = `radius=${data.distance}`
+    let type = `type=${data.category}`
+
+    
+    return fetch(`http://localhost:3001/api/v1/search?${location}&${radius}&${type}`)
+    .then(response => response.json())
+  }
+
+
+  // END New Functions
 
   static getCurrentUser() {
     return fetch(`http://localhost:3001/api/v1/currentuser`, {

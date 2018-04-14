@@ -1,0 +1,10 @@
+@import "place-card.css";
+
+.place-container {
+  background: #d9d9d9;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

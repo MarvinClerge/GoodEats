@@ -8,10 +8,15 @@
     padding: .2rem .5rem .2rem .5rem;
   }
 
+  .nav a {
+    text-decoration: none;
+  }
+
   .nav-title {
     font-size: 2rem;
     color: white;
     grid-column: 1;
+    margin: 0;
   }
 
   .nav-btn {
@@ -37,5 +42,6 @@
     font-size: 2rem;
     color: white;
     padding: .2rem 0 0 .5rem;
+    margin: 0;
   }
 }

@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 
 import Adapter from '../adapter'
 import Search from './Search2'
-import PlacesContainer from './PlacesContainer'
+import PlaceContainer from './place-container/PlaceContainer'
+// import PlacesContainer from './PlacesContainer'
 
 class Home extends Component {
   // window.location.pathname === '/'
@@ -23,6 +24,7 @@ class Home extends Component {
     return(
       <div className='home'>
         <Search handleSearch={this.props.handleSearch} />
+        <PlaceContainer />
         {/* <PlacesContainer places={this.props.places} addToFavorites={this.props.addToFavorites} removeFromFavorites={this.props.removeFromFavorites} favorites={this.props.favorites} auth={this.props.auth}/> */}
       </div>
     )
